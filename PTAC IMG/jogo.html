@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedra, Papel e Tesoura</title>
+    <style>
+        body {
+            display: flex;
+            background-color: #9543aa;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px; 
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .placar {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #c168c9;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 2px solid #1d1c1c;
+            margin-bottom: 10px;
+        }
+
+        .escolha, .area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px; 
+        }
+
+        .escolha img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .escolha img:hover {
+            transform: scale(1.05);
+        }
+
+        label {
+            font-size: 24px;
+        }
+
+        .caixas {
+            width: 160px; 
+            height: 160px; 
+            border: 2px solid black; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(163, 90, 223);
+            border-radius: 10px;
+        }
+
+        .caixas img {
+            width: 160px;
+            height: 160px;
+        }
+
+        img{
+            width: 160px;
+            height: 160px;
+            border-radius: 20px;
+            border: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="placar">
+        Jogador: <span id="vitorias-jogador">0</span> | Computador: <span id="vitorias-computador">0</span>
+    </div>
+
+    <div class="escolha">
+
+        <img src="WhatsApp Image 2026-06-14 at 20.20.43.jpeg" alt="Pedra" width="160px" height="160px" onclick="jogar('WhatsApp Image 2026-06-14 at 20.20.43.jpeg')">
+
+        <img src="WhatsApp Image 2026-06-14 at 20.21.23.jpeg" alt="Papel" width="160px" height="160px" onclick="jogar('WhatsApp Image 2026-06-14 at 20.21.23.jpeg')">
+
+        <img src="WhatsApp Image 2026-06-14 at 20.21.05.jpeg" alt="Tesoura" width="160px" height="160px" onclick="jogar('WhatsApp Image 2026-06-14 at 20.21.05.jpeg')">
+    </div>
+
+
+    <div class="area">
+        <div id="area-jogador" class="caixas">Sua jogada</div>
+        <label>X</label>
+        <div id="area-maquina" class="caixas">Computador</div>
+    </div>
+
+    <script>
+        let VitoriaJogador = 0;
+        let vitoriasComputador = 0;
+
+        function jogar(escolhaJogador) {
+            document.getElementById('area-jogador').innerHTML = `<img src="${escolhaJogador}.jpeg" alt="${escolhaJogador}">`;
+
+            const JogadaPossivel = ["Pedra", "Papel", "Tesoura"];
+            const numeroAleatorio = Math.trunc(Math.random() * 3); 
+            const JogadaDaMaquina = JogadaPossivel[numeroAleatorio];
+            
+            document.getElementById('area-maquina').innerHTML = `<img src="${JogadaDaMaquina}.jpeg" alt="${JogadaDaMaquina}">`;
+
+            let Resultado = "";
+
+            if (escolhaJogador === JogadaDaMaquina) {
+                Resultado = "Empate!";
+            } else if (
+                (escolhaJogador === "Pedra" && JogadaDaMaquina === "Tesoura") ||
+                (escolhaJogador === "Papel" && JogadaDaMaquina === "Pedra") ||
+                (escolhaJogador === "Tesoura" && JogadaDaMaquina === "Papel")
+            ) {
+                Resultado = " Você venceu! ";
+                VitoriaJogador++;
+            } else {
+                Resultado = " O computador venceu! ";
+                vitoriasComputador++;
+            }
+
+            document.getElementById('vitorias-jogador').innerText = VitoriaJogador;
+            document.getElementById('vitorias-computador').innerText = vitoriasComputador;
+
+            setTimeout(() => {
+                alert(Resultado);
+                document.getElementById('area-jogador').innerHTML = " Sua jogada";
+                document.getElementById('area-maquina').innerHTML = " Computador";
+            }, 160);
+        }
+    </script>
+
+</body>
+</html>
